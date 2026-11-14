@@ -1,0 +1,20 @@
+import json
+T = json.load(open('../results/test_report.json'))
+rows = [
+ ('REQ-CTRL-AA-001','Erro nulo em regime (degrau)','state-feedback c/ integrador z (design.py: lqr_gains, run_design.py)','generated/aurora_ctrl.c : integrador `z = s->z + TS*(rr-th)`','T-CTRL-001'),
+ ('REQ-CTRL-AA-002','Sobressinal <= 8 %','estrutura I-P (c=0), q=diag(0,0,1,1000), rho=1e-2','generated/aurora_ctrl.c : K0..K3, CW','T-CTRL-002'),
+ ('REQ-CTRL-AA-003','Acomodacao <= 300 ms','polos de malha fechada (design.json: poles_s)','generated/aurora_ctrl.c : K0..K3','T-CTRL-003'),
+ ('REQ-CTRL-AA-004','|V|<=48 V, |i|<=8 A','saturacao + limitador de corrente preditivo (refmodel.step) + anti-windup','generated/aurora_ctrl.c : u_hi/u_lo, VMAX, IMAX, CAW','T-CTRL-004'),
+ ('REQ-SAFE-AA-001','Torque zero <= 100 ms apos deteccao','supervisor.py SPEC linhas 0 e 2; propriedade P1 (modelcheck.py)','generated/aurora_sup.c : case SUP_MOVING / SUP_RESUMING','T-SAFE-001'),
+ ('REQ-SAFE-AA-002','Sem retomada automatica','supervisor.py SPEC linha 1 (borda de rearme); propriedade P2','generated/aurora_sup.c : case SUP_HALT (rearm_edge)','T-SAFE-002'),
+ ('REQ-SAFE-AA-003','Retoma trajetoria original apos rearme','supervisor.py SPEC linhas 1 e 3 (RESUMING->MOVING); propriedade P3 (vivacidade)','generated/aurora_sup.c : case SUP_RESUMING; aurora_ctrl.c : limitador de taxa (collab)','T-SAFE-003'),
+ ('REQ-SAFE-AA-004','v_TCP <= 250 mm/s na zona','limitador de taxa da referencia (v_design=233,9 mm/s, calib_collab.py)','generated/aurora_ctrl.c : DMAX, bloco `if (collab)`','T-SAFE-004 / T-SAFE-004N'),
+]
+md = ['# Matriz de rastreabilidade (gerada por src/make_trace.py)\n', '| Requisito | Descricao | Modelo | Codigo gerado | Teste | Resultado |', '|---|---|---|---|---|---|']
+for r in rows:
+    ids = [i.strip() for i in r[4].split('/')]
+    res = '; '.join(f"{i}: {'PASS' if T[i]['passed'] else 'FAIL'}" for i in ids)
+    md.append(f'| {r[0]} | {r[1]} | {r[2]} | {r[3]} | {r[4]} | {res} |')
+md.append('\nTestes de apoio: T-SIL-EQUIV (equivalencia modelo-codigo): ' + ('PASS' if T['T-SIL-EQUIV']['passed'] else 'FAIL'))
+open('../docs/traceability.md', 'w').write('\n'.join(md)); json.dump(rows, open('../results/trace_rows.json', 'w'))
+print('\n'.join(md))

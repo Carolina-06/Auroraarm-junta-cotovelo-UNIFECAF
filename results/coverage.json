@@ -1,0 +1,27 @@
+{
+ "nodes": 43,
+ "nodes_cov": 43,
+ "edges": 172,
+ "edges_cov": 172,
+ "mode_cov": [
+  "HALT",
+  "MOVING",
+  "RESUMING"
+ ],
+ "spec_rows_cov": [
+  "('stay', 0)",
+  "('stay', 1)",
+  "('stay', 2)",
+  "0",
+  "1",
+  "2",
+  "3"
+ ],
+ "n_spec_rows": 4,
+ "n_tests": 22,
+ "total_steps": 1139,
+ "mutants_killed": {
+  "edge": true,
+  "lockout": true
+ }
+}

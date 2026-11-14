@@ -1,0 +1,52 @@
+{
+ "T-CTRL-001": {
+  "req": "REQ-CTRL-AA-001",
+  "passed": true,
+  "detail": "erro estacionario max 3.55e-15 rad (degraus 0,1..10 rad); com degrau de carga 0,25 N.m: 1.06e-11 rad"
+ },
+ "T-CTRL-002": {
+  "req": "REQ-CTRL-AA-002",
+  "passed": true,
+  "detail": "sobressinal max 0.00 % (limite 8 %) para degraus 0,1..10 rad"
+ },
+ "T-CTRL-003": {
+  "req": "REQ-CTRL-AA-003",
+  "passed": true,
+  "detail": "ts(2%) max 166 ms (limite 300 ms); valido ate 17 rad no motor"
+ },
+ "T-CTRL-004": {
+  "req": "REQ-CTRL-AA-004",
+  "passed": true,
+  "detail": "|u| max 48.00 V (48 V); |i| max 7.84 A (8 A) incl. ciclos perdidos e laco com C gerado"
+ },
+ "T-SAFE-001": {
+  "req": "REQ-SAFE-AA-001",
+  "passed": true,
+  "detail": "model checker P1 verdadeiro (25795 estados); latencia pior caso 25 ms em 84 combinacoes; cenario SIL: 20, 20, 20, 20 ms; folga >= 75 ms"
+ },
+ "T-SAFE-002": {
+  "req": "REQ-SAFE-AA-002",
+  "passed": true,
+  "detail": "model checker P2 verdadeiro; retomadas sem rearme no cenario: 0; mutante 'borda' reprovado por P1, 'lockout' por P3; suite de 22 testes mata ambos"
+ },
+ "T-SAFE-003": {
+  "req": "REQ-SAFE-AA-003",
+  "passed": true,
+  "detail": "model checker P3 verdadeiro (sem ciclo justo fora de MOVING); tempo do rearme ate MOVING e |theta-r|<0,5 rad: 0.20, 0.14, 0.42, 0.39 s; mutante 'lockout' viola P3 (contraexemplo)"
+ },
+ "T-SAFE-004": {
+  "req": "REQ-SAFE-AA-004",
+  "passed": true,
+  "detail": "v_TCP max na zona = 242.6 mm/s (limite 250; alvo de projeto 245); referencia limitada em taxa; comando de 900 rad"
+ },
+ "T-SAFE-004N": {
+  "req": "REQ-SAFE-AA-004 (teste negativo)",
+  "passed": true,
+  "detail": "entrada na zona ainda em movimento rapido: v_TCP max = 363 mm/s > 250 -> o limitador de referencia NAO basta; exige desaceleracao planejada antes da zona ou monitoramento de velocidade segura (limitacao documentada)"
+ },
+ "T-SIL-EQUIV": {
+  "req": "REQ-CTRL-AA-001..004",
+  "passed": true,
+  "detail": "C gerado vs binary32: erro 0.0e+00; vs float64: 2.26e-03 V (395 eps*umax; razao local max. erro/(eps*soma-das-parcelas) = 10.1); supervisor C vs modelo: 0 divergencias em 301139 passos"
+ }
+}
